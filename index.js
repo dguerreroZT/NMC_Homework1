@@ -3,26 +3,30 @@ const url = require("url")
 const port = 8000
 
 
+const sayHello = (response) => {
+	response.setHeader('Content-Type', 'application/json');
+	response.writeHead(200);
+	response.end(JSON.stringify({msg: `Hola `}));
+}
+
+const sayGoodBye = (response) => {
+	response.setHeader('Content-Type', 'application/json');
+	response.writeHead(404);
+	response.end(JSON.stringify({msg: "Adios"}));
+}
+
 const server = http.createServer((request, response) => {
 	var parsedUrl = url.parse(request.url)
 	var path = parsedUrl.pathname;
 	path = path.replace(/^\/+|\/+$/g, '');
+	path = path.toLowerCase()
 
-	switch(path){
-		case "hello":{
-			response.setHeader('Content-Type', 'application/json');
-			response.writeHead(200);
-			response.end(JSON.stringify({msg: `Hola `}));
-			break;
-		}
-		default:{
-			response.setHeader('Content-Type', 'application/json');
-			response.writeHead(404);
-			response.end(JSON.stringify({msg: "Adios"}));
-			break;
-		}
+	if(request.method === "POST" && path === "hello"){
+		sayHello(response)
+		return 
 	}
 
+	sayGoodBye(response)
 
 })
 
