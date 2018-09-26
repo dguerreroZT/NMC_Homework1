@@ -3,13 +3,13 @@ const url = require("url")
 const port = 8000
 
 
-const sayHello = (response) => {
+function sayHello(response){
 	response.setHeader('Content-Type', 'application/json');
 	response.writeHead(200);
 	response.end(JSON.stringify({msg: `Hola `}));
 }
 
-const sayGoodBye = (response) => {
+function sayGoodBye(response){
 	response.setHeader('Content-Type', 'application/json');
 	response.writeHead(404);
 	response.end(JSON.stringify({msg: "Adios"}));
